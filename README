@@ -1,0 +1,30 @@
+NAME
+    Log::Any::For::LWP - Add logging to LWP
+
+VERSION
+    version 0.01
+
+SYNOPSIS
+     use Log::Any::For::LWP
+         -log_request         => 1, # optional, default 1
+         -log_response_header => 1, # optional, default 1
+         -log_response_body   => 1, # optional, default 0
+     ;
+
+    Sample script and output:
+
+     % TRACE=1 perl -MLog::Any::App -MLog::Any::For::LWP \
+       -e'get "http://www.google.com/"'
+
+SEE ALSO
+    Log::Any
+
+AUTHOR
+    Steven Haryanto <stevenharyanto@gmail.com>
+
+COPYRIGHT AND LICENSE
+    This software is copyright (c) 2012 by Steven Haryanto.
+
+    This is free software; you can redistribute it and/or modify it under
+    the same terms as the Perl 5 programming language system itself.
+
