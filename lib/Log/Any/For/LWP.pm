@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-our $VERSION = '0.01'; # VERSION
+our $VERSION = '0.02'; # VERSION
 
 use Net::HTTP::Methods::patch::log_request qw();
 use LWP::UserAgent::patch::log_response    qw();
@@ -46,7 +46,7 @@ Log::Any::For::LWP - Add logging to LWP
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 
@@ -58,8 +58,44 @@ version 0.01
 
 Sample script and output:
 
- % TRACE=1 perl -MLog::Any::App -MLog::Any::For::LWP \
+ % TRACE=1 perl -MLog::Any::App -MLog::Any::For::LWP -MLWP::Simple \
    -e'get "http://www.google.com/"'
+ [36] HTTP request (proto=http, len=134):
+ GET / HTTP/1.1
+ TE: deflate,gzip;q=0.3
+ Connection: TE, close
+ Host: www.google.com
+ User-Agent: LWP::Simple/6.00 libwww-perl/6.04
+
+ [79] HTTP response header:
+ 302 Moved Temporarily
+ Cache-Control: private
+ Connection: close
+ Date: Tue, 17 Jul 2012 04:39:10 GMT
+ ...
+
+ [81] HTTP request (proto=http, len=136):
+ GET / HTTP/1.1
+ TE: deflate,gzip;q=0.3
+ Connection: TE, close
+ Host: www.google.co.id
+ User-Agent: LWP::Simple/6.00 libwww-perl/6.04
+
+ [190] HTTP response header:
+ 200 OK
+ Cache-Control: private, max-age=0
+ Connection: close
+ Date: Tue, 17 Jul 2012 04:39:10 GMT
+ ...
+
+=head1 DESCRIPTION
+
+This module just bundles L<Net::HTTP::Methods::patch::log_request> and
+L<LWP::UserAgent::patch::log_response> together.
+
+Response body is dumped to a separate category. It is recommended that you dump
+this to a directory, for convenience. See the documentation of
+L<LWP::UserAgent::patch::log_response> for more details.
 
 =head1 SEE ALSO
 
