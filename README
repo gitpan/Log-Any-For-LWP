@@ -2,7 +2,7 @@ NAME
     Log::Any::For::LWP - Add logging to LWP
 
 VERSION
-    version 0.02
+    version 0.03
 
 SYNOPSIS
      use Log::Any::For::LWP
@@ -44,12 +44,12 @@ SYNOPSIS
      ...
 
 DESCRIPTION
-    This module just bundles Net::HTTP::Methods::patch::log_request and
-    LWP::UserAgent::patch::log_response together.
+    This module just bundles Net::HTTP::Methods::Patch::LogRequest and
+    LWP::UserAgent::Patch::LogResponse together.
 
     Response body is dumped to a separate category. It is recommended that
     you dump this to a directory, for convenience. See the documentation of
-    LWP::UserAgent::patch::log_response for more details.
+    LWP::UserAgent::Patch::LogResponse for more details.
 
 SEE ALSO
     Log::Any

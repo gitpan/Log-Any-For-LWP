@@ -5,10 +5,10 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-our $VERSION = '0.02'; # VERSION
+our $VERSION = '0.03'; # VERSION
 
-use Net::HTTP::Methods::patch::log_request qw();
-use LWP::UserAgent::patch::log_response    qw();
+use Net::HTTP::Methods::Patch::LogRequest qw();
+use LWP::UserAgent::Patch::LogResponse    qw();
 
 my %opts;
 
@@ -19,17 +19,17 @@ sub import {
     $opts{-log_response_header} //= 1;
     $opts{-log_response_body}   //= 0;
 
-    Net::HTTP::Methods::patch::log_request->import()
+    Net::HTTP::Methods::Patch::LogRequest->import()
           if $opts{-log_request};
-    LWP::UserAgent::patch::log_response->import(
+    LWP::UserAgent::Patch::LogResponse->import(
         -log_response_header => $opts{-log_response_header},
         -log_response_body   => $opts{-log_response_body},
     );
 }
 
 sub unimport {
-    LWP::UserAgent::patch::log_response->unimport();
-    Net::HTTP::Methods::patch::log_request->unimport()
+    LWP::UserAgent::Patch::LogResponse->unimport();
+    Net::HTTP::Methods::Patch::LogRequest->unimport()
           if $opts{-log_request};
 }
 
@@ -46,7 +46,7 @@ Log::Any::For::LWP - Add logging to LWP
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 
@@ -90,12 +90,12 @@ Sample script and output:
 
 =head1 DESCRIPTION
 
-This module just bundles L<Net::HTTP::Methods::patch::log_request> and
-L<LWP::UserAgent::patch::log_response> together.
+This module just bundles L<Net::HTTP::Methods::Patch::LogRequest> and
+L<LWP::UserAgent::Patch::LogResponse> together.
 
 Response body is dumped to a separate category. It is recommended that you dump
 this to a directory, for convenience. See the documentation of
-L<LWP::UserAgent::patch::log_response> for more details.
+L<LWP::UserAgent::Patch::LogResponse> for more details.
 
 =head1 SEE ALSO
 

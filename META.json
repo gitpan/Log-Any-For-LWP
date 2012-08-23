@@ -4,7 +4,7 @@
       "Steven Haryanto <stevenharyanto@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 4.300006, CPAN::Meta::Converter version 2.113640",
+   "generated_by" : "Dist::Zilla version 4.300015, CPAN::Meta::Converter version 2.120921",
    "license" : [
       "perl_5"
    ],
@@ -26,14 +26,10 @@
       },
       "runtime" : {
          "requires" : {
-            "LWP::UserAgent::patch::log_response" : 0,
-            "Net::HTTP::Methods::patch::log_request" : 0,
+            "LWP::UserAgent::Patch::LogResponse" : "0",
+            "Log::Any" : "0",
+            "Net::HTTP::Methods::Patch::LogRequest" : "0",
             "perl" : "5.010000"
-         }
-      },
-      "test" : {
-         "requires" : {
-            "Test::More" : "0.96"
          }
       }
    },
@@ -44,6 +40,6 @@
          "url" : "http://github.com/sharyanto/perl-Log-Any-For-LWP"
       }
    },
-   "version" : "0.02"
+   "version" : "0.03"
 }
 
