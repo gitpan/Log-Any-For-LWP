@@ -2,11 +2,12 @@ NAME
     Log::Any::For::LWP - Add logging to LWP
 
 VERSION
-    version 0.03
+    version 0.04
 
 SYNOPSIS
      use Log::Any::For::LWP
-         -log_request         => 1, # optional, default 1
+         -log_request_header  => 1, # optional, default 1
+         -log_request_body    => 1, # optional, default 0
          -log_response_header => 1, # optional, default 1
          -log_response_body   => 1, # optional, default 0
      ;
@@ -44,7 +45,8 @@ SYNOPSIS
      ...
 
 DESCRIPTION
-    This module just bundles Net::HTTP::Methods::Patch::LogRequest and
+    This module just bundles Net::HTTP::Methods::Patch::LogRequest,
+    LWP::UserAgent::Patch::LogRequestContent, and
     LWP::UserAgent::Patch::LogResponse together.
 
     Response body is dumped to a separate category. It is recommended that
@@ -58,7 +60,7 @@ AUTHOR
     Steven Haryanto <stevenharyanto@gmail.com>
 
 COPYRIGHT AND LICENSE
-    This software is copyright (c) 2012 by Steven Haryanto.
+    This software is copyright (c) 2013 by Steven Haryanto.
 
     This is free software; you can redistribute it and/or modify it under
     the same terms as the Perl 5 programming language system itself.

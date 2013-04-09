@@ -1,27 +1,32 @@
 package Log::Any::For::LWP;
 
-use 5.010;
+use 5.010001;
 use strict;
 use warnings;
 use Log::Any '$log';
 
-our $VERSION = '0.03'; # VERSION
+our $VERSION = '0.04'; # VERSION
 
-use Net::HTTP::Methods::Patch::LogRequest qw();
-use LWP::UserAgent::Patch::LogResponse    qw();
+use Net::HTTP::Methods::Patch::LogRequest    qw();
+use LWP::UserAgent::Patch::LogRequestContent qw();
+use LWP::UserAgent::Patch::LogResponse       qw();
 
 my %opts;
 
 sub import {
     my $self = shift;
     %opts = @_;
-    $opts{-log_request}         //= 1;
+    $opts{-log_request_header}  //= 1;
+    $opts{-log_request_body}    //= 0;
     $opts{-log_response_header} //= 1;
     $opts{-log_response_body}   //= 0;
 
     Net::HTTP::Methods::Patch::LogRequest->import()
-          if $opts{-log_request};
+          if $opts{-log_request_header};
+    LWP::UserAgent::Patch::LogRequestContent->import()
+          if $opts{-log_request_body};
     LWP::UserAgent::Patch::LogResponse->import(
+        -warn_target_loaded  => 0,
         -log_response_header => $opts{-log_response_header},
         -log_response_body   => $opts{-log_response_body},
     );
@@ -29,8 +34,10 @@ sub import {
 
 sub unimport {
     LWP::UserAgent::Patch::LogResponse->unimport();
+    LWP::UserAgent::Patch::LogRequestContent->unimport()
+          if $opts{-log_request_body};
     Net::HTTP::Methods::Patch::LogRequest->unimport()
-          if $opts{-log_request};
+          if $opts{-log_request_header};
 }
 
 1;
@@ -46,12 +53,13 @@ Log::Any::For::LWP - Add logging to LWP
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
  use Log::Any::For::LWP
-     -log_request         => 1, # optional, default 1
+     -log_request_header  => 1, # optional, default 1
+     -log_request_body    => 1, # optional, default 0
      -log_response_header => 1, # optional, default 1
      -log_response_body   => 1, # optional, default 0
  ;
@@ -90,12 +98,15 @@ Sample script and output:
 
 =head1 DESCRIPTION
 
-This module just bundles L<Net::HTTP::Methods::Patch::LogRequest> and
+This module just bundles L<Net::HTTP::Methods::Patch::LogRequest>,
+L<LWP::UserAgent::Patch::LogRequestContent>, and
 L<LWP::UserAgent::Patch::LogResponse> together.
 
 Response body is dumped to a separate category. It is recommended that you dump
 this to a directory, for convenience. See the documentation of
 L<LWP::UserAgent::Patch::LogResponse> for more details.
+
+=for Pod::Coverage ^(unimport)$
 
 =head1 SEE ALSO
 
@@ -107,7 +118,7 @@ Steven Haryanto <stevenharyanto@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Steven Haryanto.
+This software is copyright (c) 2013 by Steven Haryanto.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

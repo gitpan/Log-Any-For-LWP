@@ -17,16 +17,18 @@ my %module_build_args = (
     "Steven Haryanto <stevenharyanto\@gmail.com>"
   ],
   "dist_name" => "Log-Any-For-LWP",
-  "dist_version" => "0.03",
+  "dist_version" => "0.04",
   "license" => "perl",
   "module_name" => "Log::Any::For::LWP",
   "recommends" => {},
   "recursive_test_files" => 1,
   "requires" => {
+    "LWP::UserAgent::Patch::LogRequestContent" => 0,
     "LWP::UserAgent::Patch::LogResponse" => 0,
     "Log::Any" => 0,
+    "Module::Patch" => "0.17",
     "Net::HTTP::Methods::Patch::LogRequest" => 0,
-    "perl" => "5.010000"
+    "perl" => "5.010001"
   },
   "script_files" => []
 );
