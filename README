@@ -2,14 +2,15 @@ NAME
     Log::Any::For::LWP - Add logging to LWP
 
 VERSION
-    version 0.04
+    version 0.05
 
 SYNOPSIS
      use Log::Any::For::LWP
-         -log_request_header  => 1, # optional, default 1
-         -log_request_body    => 1, # optional, default 0
-         -log_response_header => 1, # optional, default 1
-         -log_response_body   => 1, # optional, default 0
+         -log_request_header   => 1, # optional, default 1 (turn on Net::HTTP::Methods::Patch::LogRequest)
+         -log_request_body     => 1, # optional, default 0 (turn on LWP::UserAgent::Patch::LogRequestContent)
+         -log_response_header  => 1, # optional, default 1 (turn on LWP::UserAgent::Patch::LogResponse)
+         -log_response_body    => 1, # optional, default 0 (turn on LWP::UserAgent::Patch::LogResponse)
+         -decode_response_body => 1, # optional, default 1 (passed to LWP::UserAgent::Patch::LogResponse)
      ;
 
     Sample script and output:

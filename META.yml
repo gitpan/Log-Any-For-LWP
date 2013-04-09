@@ -15,7 +15,7 @@ meta-spec:
 name: Log-Any-For-LWP
 requires:
   LWP::UserAgent::Patch::LogRequestContent: 0
-  LWP::UserAgent::Patch::LogResponse: 0
+  LWP::UserAgent::Patch::LogResponse: 0.08
   Log::Any: 0
   Module::Patch: 0.17
   Net::HTTP::Methods::Patch::LogRequest: 0
@@ -23,4 +23,4 @@ requires:
 resources:
   homepage: http://metacpan.org/release/Log-Any-For-LWP
   repository: http://github.com/sharyanto/perl-Log-Any-For-LWP
-version: 0.04
+version: 0.05

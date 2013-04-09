@@ -1,5 +1,10 @@
 Revision history for Log-Any-For-LWP
 
+0.05     2013-04-10 (SHARYANTO)
+
+         - Pass -decode_response_body to LWP::UserAgent::Patch::LogResponse.
+
+
 0.04     2013-04-10 (SHARYANTO)
 
          [INCOMPATIBLE CHANGES]

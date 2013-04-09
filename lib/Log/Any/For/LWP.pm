@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use Log::Any '$log';
 
-our $VERSION = '0.04'; # VERSION
+our $VERSION = '0.05'; # VERSION
 
 use Net::HTTP::Methods::Patch::LogRequest    qw();
 use LWP::UserAgent::Patch::LogRequestContent qw();
@@ -16,19 +16,21 @@ my %opts;
 sub import {
     my $self = shift;
     %opts = @_;
-    $opts{-log_request_header}  //= 1;
-    $opts{-log_request_body}    //= 0;
-    $opts{-log_response_header} //= 1;
-    $opts{-log_response_body}   //= 0;
+    $opts{-log_request_header}   //= 1;
+    $opts{-log_request_body}     //= 0;
+    $opts{-log_response_header}  //= 1;
+    $opts{-log_response_body}    //= 0;
+    $opts{-decode_response_body} //= 1;
 
     Net::HTTP::Methods::Patch::LogRequest->import()
           if $opts{-log_request_header};
     LWP::UserAgent::Patch::LogRequestContent->import()
           if $opts{-log_request_body};
     LWP::UserAgent::Patch::LogResponse->import(
-        -warn_target_loaded  => 0,
-        -log_response_header => $opts{-log_response_header},
-        -log_response_body   => $opts{-log_response_body},
+        -warn_target_loaded   => 0,
+        -log_response_header  => $opts{-log_response_header},
+        -log_response_body    => $opts{-log_response_body},
+        -decode_response_body => $opts{-decode_response_body},
     );
 }
 
@@ -53,15 +55,16 @@ Log::Any::For::LWP - Add logging to LWP
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
  use Log::Any::For::LWP
-     -log_request_header  => 1, # optional, default 1
-     -log_request_body    => 1, # optional, default 0
-     -log_response_header => 1, # optional, default 1
-     -log_response_body   => 1, # optional, default 0
+     -log_request_header   => 1, # optional, default 1 (turn on Net::HTTP::Methods::Patch::LogRequest)
+     -log_request_body     => 1, # optional, default 0 (turn on LWP::UserAgent::Patch::LogRequestContent)
+     -log_response_header  => 1, # optional, default 1 (turn on LWP::UserAgent::Patch::LogResponse)
+     -log_response_body    => 1, # optional, default 0 (turn on LWP::UserAgent::Patch::LogResponse)
+     -decode_response_body => 1, # optional, default 1 (passed to LWP::UserAgent::Patch::LogResponse)
  ;
 
 Sample script and output:
